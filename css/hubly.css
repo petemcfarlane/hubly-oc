@@ -1,0 +1,27 @@
+/*html,body {overflow:auto}*/
+.overflow-auto {overflow:auto}
+.primary {color:#ff9037}
+header {background:#FF9037; color:white; margin-bottom:1em;background: #ff7c19}
+header a {color:#fff; font-family:"Sommet Rounded"; text-shadow:0px 1px 1px #E76700; font-size:1.5em}
+
+.no-touch header a img {transition:transform .1s; -webkit-transition:-webkit-transform .1s;}
+.no-touch header a:hover,
+.no-touch header a:focus {color:white; text-shadow:0px 2px 2px #E76700,0 -2px 0px rgba(255, 187, 116, 0.12);}
+.no-touch header a:hover img {transform:scale(1.1); -webkit-transform:scale(1.1);}
+.orbit-timer {display:none}
+.orbit-container {margin-bottom:1.675em}
+.white {color:white !important}
+.orbit-next, .orbit-prev {opacity:0; -webkit-transition:opacity.4s ease-in; -moz-transition:opacity .4s ease-in; -o-transition:opacity .4s ease-in; transition:opacity .4s ease-in;}
+.orbit-container:hover .orbit-next, .orbit-container:hover .orbit-prev {opacity:0.9}
+
+header nav {height: 45px; line-height:45px}
+header nav .standard{display:none}
+header nav .hubly-logo {width:51px; height:51px}
+
+@media only screen and (min-width: 32em) {
+	header nav {height:120px; line-height:120px; text-align:center}
+	header nav .standard {display:block}
+	nav.mini {display:none}
+	header nav a {font-size:2em;}
+	header nav .hubly-logo {width:136px; height:136px}
+}

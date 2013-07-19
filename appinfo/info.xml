@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<info>
+	<id>hubly</id>
+	<name>Hubly</name>
+	<description>Description</description>
+	<version>0.1</version>
+	<licence>AGPL</licence>
+	<author>Pete McFarlane</author>
+	<require>5</require>
+	
+	<remote>
+		<file id="caldav">appinfo/caldav.php</file>
+	</remote>
+
+	<public>
+		<file id="caldav">appinfo/caldav.php</file>
+	</public>
+
+	<standalone />
+</info>
