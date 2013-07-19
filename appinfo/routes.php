@@ -62,11 +62,24 @@ $this->create('privacyPolicy_path', '/privacy-policy')->get()->action(function($
 // External Methods
 
 \OCP\API::register(
-    'get',
-    '/apps/hubly/external',
-    function($urlParameters) {
-      return new \OC_OCS_Result(array("hello"));
-    },
-    'hubly',
-    OC_API::ADMIN_AUTH
+	'get',
+	'/apps/hubly/external',
+	function($urlParameters) {
+		$return['uid'] = OC_User::getUser();
+		return new \OC_OCS_Result($return);
+	},
+	'hubly',
+	OC_API::USER_AUTH
+);
+
+\OCP\API::register(
+	'POST',
+	'/apps/hubly/external',
+	function($urlParameters) {
+		$return['VARS'] = $_POST;
+		$return['uid'] = OC_User::getUser();
+		return new \OC_OCS_Result($return);
+	},
+	'hubly',
+	OC_API::USER_AUTH
 );

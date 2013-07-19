@@ -1,5 +1,7 @@
-/*html,body {overflow:auto}*/
-.overflow-auto {overflow:auto}
+/*html,body {overflow:auto}
+.overflow-auto {overflow:auto}*/
+.absolute-left {position:absolute; left:0}
+.absolute-right {position:absolute; right:0}
 .primary {color:#ff9037}
 header {background:#FF9037; color:white; margin-bottom:1em;background: #ff7c19}
 header a {color:#fff; font-family:"Sommet Rounded"; text-shadow:0px 1px 1px #E76700; font-size:1.5em}
