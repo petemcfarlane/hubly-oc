@@ -5,6 +5,6 @@ OCP\App::addNavigationEntry( array(
 	'id' => 'hubly',
 	'order' => 10,
 	'href' => OCP\Util::linkToRoute('root_path'),
-	'icon' => OCP\Util::imagePath('hubly', 'hubly.svg'),
+	'icon' => OCP\Util::imagePath('hubly', 'hubly-logo-nav.svg'),
 	'name' => 'Hubly'
 ));
