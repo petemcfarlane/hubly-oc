@@ -2,14 +2,14 @@
 OCP\JSON::checkAppEnabled('hubly');
 OCP\App::setActiveNavigationEntry( 'hubly' );
 
-if (!OCP\User::isLoggedIn()) {
-	$page = isset($page) ? $page : 'guest_index';
-	$uid = NULL;
-	$uname = NULL;
-} else {
-	$page = isset($page) ? $page : 'index';
+if (OCP\User::isLoggedIn()) {
+    $page = isset($page) ? $page : 'index';
 	$uid = OCP\User::getUser();
 	$uname = OCP\User::getDisplayName($uid);
+} else {
+    $page = isset($page) ? $page : 'guest_index';
+	$uid = NULL;
+	$uname = NULL;
 }
 //OCP\User::checkLoggedIn();
 
