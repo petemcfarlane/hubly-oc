@@ -15,14 +15,14 @@
 		<header>
 			<div class="row">
 				<nav class="large-12 columns">
-					<a href="<?php p(OCP\Util::linkToRoute('root_path')); ?>" class="absolute-left standard">Home</a>
-					<a href="<?php p(OCP\Util::linkToRoute('root_path')); ?>"><img src="<?php p(OCP\Util::imagePath('hubly', 'hubly-logo.svg' )); ?>" alt="Hubly" class="hubly-logo" /></a>
+					<a href="<?php p(OCP\Util::linkToRoute('root_path')); ?>" class="left standard">Home</a>
+					<a href="<?php p(OCP\Util::linkToRoute('root_path')); ?>" class="header-logo"><img src="<?php p(OCP\Util::imagePath('hubly', 'hubly-logo.svg' )); ?>" alt="Hubly" class="hubly-logo" /></a>
 					<?php if($_['uid']) {  ?>
-						<a href="#" class="absolute-right"><?php p($_['uname']); ?></a>
+						<a href="#" class="right"><?php p($_['uname']); ?></a>
 					<?php } else { ?>
-						<a href="<?php p(OCP\Util::linkToRoute('login_path')); ?>" class="absolute-right">Login</a>
+						<a href="<?php p(OCP\Util::linkToRoute('login_path')); ?>" class="right">Login</a>
 					<?php } ?>
 				</nav>
 			</div>
 		</header>
-		<section>
+		<section>

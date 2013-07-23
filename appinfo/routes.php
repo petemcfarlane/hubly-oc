@@ -58,12 +58,28 @@ $this->create('privacyPolicy_path', '/privacy-policy')->get()->action(function($
 	require __DIR__ . '/../index.php';
 });
 
+$this->create('devices_path', '/devices')->get()->action(function($params){
+    $page = "devices";
+	require __DIR__ . '/../index.php';
+});
+
+$this->create('createDevice_path', '/devices')->post()->action(function($params){
+    try {
+        OC_Hubly::createDevice($_POST['uid'], $_POST['name'], $_POST['password']);
+    } catch (Exception $e) {
+        echo 'Error exception: ',  $e->getMessage(), "\n";
+    }
+    $location = OCP\Util::linkToRoute("devices_path");
+	header( 'Location: '.$location );
+	exit();
+    
+});
 
 // External Methods
 
 \OCP\API::register(
 	'get',
-	'/apps/hubly/external',
+	'/apps/hubly',
 	function($urlParameters) {
 		$return['uid'] = OC_User::getUser();
 		return new \OC_OCS_Result($return);
@@ -74,7 +90,7 @@ $this->create('privacyPolicy_path', '/privacy-policy')->get()->action(function($
 
 \OCP\API::register(
 	'POST',
-	'/apps/hubly/external',
+	'/apps/hubly',
 	function($urlParameters) {
 		$return['VARS'] = $_POST;
 		$return['uid'] = OC_User::getUser();
