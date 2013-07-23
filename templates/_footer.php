@@ -6,6 +6,7 @@
 				<div class="large-9 columns">
 					<ul class="inline-list right">
 						<li><a href="<?php p(OCP\Util::LinkToRoute('root_path')); ?>">Home</a></li>
+						<li><a href="<?php p(OCP\Util::LinkToRoute('help_path')); ?>">Help</a></li>
 						<li><a href="<?php p(OCP\Util::LinkToRoute('about_path')); ?>">About</a></li>
 						<li><a href="<?php p(OCP\Util::LinkToRoute('contact_path')); ?>">Contact</a></li>
 						<li><a href="<?php p(OCP\Util::LinkToRoute('privacyPolicy_path')); ?>">Privacy</a></li>

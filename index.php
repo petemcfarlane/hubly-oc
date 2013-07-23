@@ -29,7 +29,7 @@ $tmpl = new OCP\Template( 'hubly', $page, $renderas );
 //$tmpl->assign( 'project_id', $project_id );
 //$tmpl->assign( 'view', 		 $view );
 //$tmpl->assign( 'item', 	 	 $item );
-
-$tmpl->assign( 'uname', $uname);
-$tmpl->assign( 'uid', $uid );
+$tmpl->assign('page', $page);
+$tmpl->assign('uname', $uname);
+$tmpl->assign('uid', $uid );
 $tmpl->printPage();

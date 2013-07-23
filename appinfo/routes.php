@@ -72,8 +72,18 @@ $this->create('createDevice_path', '/devices')->post()->action(function($params)
     $location = OCP\Util::linkToRoute("devices_path");
 	header( 'Location: '.$location );
 	exit();
-    
 });
+
+$this->create('apps_path', '/apps')->get()->action(function($params){
+	$page = "apps";
+	require __DIR__ . '/../index.php';
+});
+
+$this->create('settings_path', '/settings')->get()->action(function($params){
+	$page = "settings";
+	require __DIR__ . '/../index.php';
+});
+
 
 // External Methods
 
@@ -81,7 +91,7 @@ $this->create('createDevice_path', '/devices')->post()->action(function($params)
 	'get',
 	'/apps/hubly',
 	function($urlParameters) {
-		$return['uid'] = OC_User::getUser();
+	$return['uid'] = OC_User::getUser();
 		return new \OC_OCS_Result($return);
 	},
 	'hubly',
