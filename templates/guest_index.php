@@ -60,7 +60,7 @@
 
 <div class="row">
 	<div class="large-6 columns overflow-auto">
-		<img src="<?php p(OCP\Util::imagePath('hubly', 'sad.jpg' )); ?>">
+		<img src="<?php p(OCP\Util::imagePath('hubly', 'broken-phone.jpg' )); ?>">
 		<div class="panel callout">
 			<h5 class="white">Create a backup of your settings, should one of your devices fail</h5>
 		</div>
