@@ -3,8 +3,9 @@ html,body {overflow:auto}
 .overflow-auto {overflow:auto}
 .absolute-left {position:absolute; left:0}
 .absolute-right {position:absolute; right:0}
-.white {color:white !important}
 */
+.white {color:white !important}
+
 
 .primary {color:#ff9037}
 

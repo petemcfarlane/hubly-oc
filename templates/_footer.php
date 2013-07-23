@@ -13,7 +13,7 @@
 				</div>
 			</div>
 		</footer>
-		<script src="<?php p(OCP\Util::linkto('core', 'js/jquery-1.10.0.min.js')); ?>"></script>
+		<script src="<?php p(OCP\Util::linkto('core', 'js/jquery-1.10.2.min.js')); ?>"></script>
 		<script src="<?php p(OCP\Util::linkto('hubly', 'js/foundation.min.js')); ?>"></script>
 		<script src="<?php p(OCP\Util::linkto('hubly', 'js/hubly.js')); ?>"></script>
 	</body>
