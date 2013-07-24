@@ -10,6 +10,8 @@
 		<link href="<?php p(OCP\Util::linkto('hubly', 'css/sommet-rounded.css')); ?>" media="all" rel="stylesheet">
 		<link href="<?php p(OCP\Util::imagePath('hubly', 'hubly.svg' )); ?>" rel="shortcut icon" type="image/vnd.microsoft.icon">
 		<script src="<?php p(OCP\Util::linkto('hubly', 'js/custom.modernizr.js')); ?>"></script>
+		<link rel="apple-touch-icon" href="<?php p(OCP\Util::imagePath('hubly', 'apple-touch-icon-57x57.png' )); ?>" />
+		<link rel="apple-touch-icon" sizes="114x114" href="<?php p(OCP\Util::imagePath('hubly', 'apple-touch-icon-114x114.png')); ?>" />
 	</head>
 	<body>
 		<header>
