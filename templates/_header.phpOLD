@@ -17,7 +17,7 @@
 					<section class="top-bar-section">
 						<ul class="left">
 							<li class="divider"></li>
-							<li><a href="<?php p(OCP\Util::linkToRoute('root_path')); ?>">Home</a></li>
+							<li><a href="<?php p(OCP\Util::linkToRoute('hubly_signup')); ?>">Home</a></li>
 							<li class="divider"></li>
 						</ul>
 					</section>

@@ -3,6 +3,7 @@ OCP\JSON::checkAppEnabled('hubly');
 OCP\App::setActiveNavigationEntry( 'hubly' );
 
 if (OCP\User::isLoggedIn()) {
+	if ($page == 'signup' || $page == 'login') OC_Hubly::redirectToHubly(); 
     $page = isset($page) ? $page : 'index';
 	$uid = OCP\User::getUser();
 	$uname = OCP\User::getDisplayName($uid);
@@ -11,6 +12,8 @@ if (OCP\User::isLoggedIn()) {
 	$uid = NULL;
 	$uname = NULL;
 }
+$response = isset($response) ? $response : NULL;
+$args = isset($args) ? $args : NULL;
 //OCP\User::checkLoggedIn();
 
 //OCP\Util::addScript('projects','projects');
@@ -29,7 +32,9 @@ $tmpl = new OCP\Template( 'hubly', $page, $renderas );
 //$tmpl->assign( 'project_id', $project_id );
 //$tmpl->assign( 'view', 		 $view );
 //$tmpl->assign( 'item', 	 	 $item );
+$tmpl->assign('response', $response);
 $tmpl->assign('page', $page);
 $tmpl->assign('uname', $uname);
-$tmpl->assign('uid', $uid );
+$tmpl->assign('uid', $uid);
+$tmpl->assign('args', $args);
 $tmpl->printPage();

@@ -1,5 +1,43 @@
 <?php
 Class OC_Hubly {
+	
+	/**
+	 * @brief Redirect to hubly home page
+	 */
+	public static function redirectToHubly() {
+		$location = OCP\Util::linkToRoute('hubly_index');
+		header("Location: ". $location);
+	}
+	
+    /**
+	 * @brief Try to create a new OC user
+	 * @param string $username
+	 * @param string $username_confirmation
+	 * @param string $password
+	 * @param string $displayName
+	 * @param array $groups default = array('hubly')
+	 * @param string $quota default = "100 MB"
+	 * @return array
+	 */
+	public static function signup($username, $username_confirmation, $password, $displayName, $groups=array('hubly'), $quota="100 MB") {
+		if (!$displayName) throw new Exception('Please provide a display name so we know what to call you', 1);	
+		if (!$username) throw new Exception('Email address must be provided, we promise not to spam you', 2);
+		if (!$username_confirmation) throw new Exception('Please re-enter your email to make sure you got it right', 3);
+		if ($username !== $username_confirmation) throw new Exception('The Email addresses you entered didn\'t match', 4);
+		if (strlen($password)<6) throw new Exception('Please choose a password of at least 6 characters', 5);
+		OC_User::createUser($username, $password);
+		OC_User::setDisplayName($username, $displayName);
+		OC_Preferences::setValue($username, 'files', 'quota', $quota);
+		foreach( $groups as $i ) {
+			if(!OC_Group::groupExists($i)) {
+				OC_Group::createGroup($i);
+			}
+			OC_Group::addToGroup( $username, $i );
+		}
+		OC_User::login($username, $password);
+		$location = OCP\Util::linkToRoute("hubly_index");
+		header( 'Location: '.$location );
+	}
 
     /**
 	 * @brief return an array of devices for a given user_id
@@ -51,8 +89,7 @@ Class OC_Hubly {
     	$id = OC_DB::insertid();
         return $id;
     }
-
-
+	
     /**
      * @brief create pagination
 	 * @return string a html ul of pagination

@@ -1,5 +1,5 @@
 //$(document).foundation();
-$(document).foundation('orbit', {
+$(document).foundation('alerts orbit', {
   timer_speed: 5000,
   pause_on_hover: true,
   resume_on_mouseout: true,
@@ -20,4 +20,4 @@ $(document).foundation('orbit', {
   //caption_class: 'orbit-caption',
   //active_slide_class: 'active',
   //orbit_transition_class: 'orbit-transitioning'
-}, function(response){console.log(response.errors)});
+}, function(response){if(response.errors.length > 0)console.log(response.errors)});

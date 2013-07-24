@@ -5,11 +5,11 @@
 				<div class="large-3 columns">&copy; Hubly <?php print date("Y"); ?></div>
 				<div class="large-9 columns">
 					<ul class="inline-list right">
-						<li><a href="<?php p(OCP\Util::LinkToRoute('root_path')); ?>">Home</a></li>
-						<li><a href="<?php p(OCP\Util::LinkToRoute('help_path')); ?>">Help</a></li>
-						<li><a href="<?php p(OCP\Util::LinkToRoute('about_path')); ?>">About</a></li>
-						<li><a href="<?php p(OCP\Util::LinkToRoute('contact_path')); ?>">Contact</a></li>
-						<li><a href="<?php p(OCP\Util::LinkToRoute('privacyPolicy_path')); ?>">Privacy</a></li>
+						<li><a href="<?php p(OCP\Util::LinkToRoute('hubly_index')); ?>">Home</a></li>
+						<li><a href="<?php p(OCP\Util::LinkToRoute('hubly_help')); ?>">Help</a></li>
+						<li><a href="<?php p(OCP\Util::LinkToRoute('hubly_about')); ?>">About</a></li>
+						<li><a href="<?php p(OCP\Util::LinkToRoute('hubly_contact')); ?>">Contact</a></li>
+						<li><a href="<?php p(OCP\Util::LinkToRoute('hubly_privacy_policy')); ?>">Privacy</a></li>
 					</ul>
 				</div>
 			</div>

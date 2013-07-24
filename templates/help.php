@@ -1,3 +1,4 @@
+<?php $title="Help"; ?>
 <?php include_once("_header.php"); ?>
 
 <div class="row">

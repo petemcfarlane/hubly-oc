@@ -6,12 +6,11 @@
 	</div>
 	<div class="large-6 columns">
 		<h3 class="primary">Sign up for free</h3>
-		<form method="post" action="<?php p(OCP\Util::linkToRoute('signup_path')); ?>">
+		<form method="post" action="<?php p(OCP\Util::linkToRoute('hubly_signup')); ?>">
 			<label for="sign_up_display_name" class="hide">Display name</label>
-			<input type="hidden" name="groups[]" value="hubly" />
-			<input id="sign_up_display_name" type="text" name="name" placeholder="Your Name" />
+			<input id="sign_up_display_name" type="text" name="name" placeholder="Your Name" <?php //print_unescaped( isset($_GET['name']) ? "value='$_GET[name]'" : ""); ?>/>
 			<label for="sign_up_email" class="hide">Email address</label>
-			<input id="sign_up_email" type="email" name="email" placeholder="Your Email" />
+			<input id="sign_up_email" type="email" name="email" placeholder="Your Email" <?php //print_unescaped( isset($_GET['email']) ? "value='$_GET[email]'" : ""); ?>/>
 			<label for="sign_up_email_confirmation" class="hide">Email address confirmation</label>
 			<input id="sign_up_email_confirmation" type="email" name="email_confirmation" placeholder="Confirm Email" />
 			<div class="row">
