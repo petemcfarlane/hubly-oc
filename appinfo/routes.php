@@ -1,6 +1,13 @@
 <?php 
+namespace OCA\Hubly;
+
+use \OCA\AppFramework\App;
+
+use \OCA\Hubly\DependencyInjection\DIContainer;
+
 $this->create('hubly_index', '/')->get()->action(function($params){
-	require __DIR__ . '/../index.php';
+//	App::main('PageController', 'index', $params, new DIContainer());
+	//require __DIR__ . '/../index.php';
 });
 
 $this->create('hubly_signup_form', '/signup')->get()->action(function($params) {
@@ -65,6 +72,9 @@ $this->create('hubly_settings', '/settings')->get()->action(function($params){
 });
 
 
-// External Methods
+// External Methods /ocs/v1.php/
 
-OCP\API::register('post', '/apps/hubly/settings', array('OC_Hubly_External', 'getSettings'), 'hubly', OC_API::GUEST_AUTH);
+/*OCP\API::register('GET', '/apps/hubly/settings', array('OC_Hubly_External', 'getSettings'), 'hubly', OC_API::GUEST_AUTH);
+OCP\API::register('POST', '/apps/hubly/settings', array('OC_Hubly_External', 'createSettings'), 'hubly', OC_API::GUEST_AUTH);
+OCP\API::register('POST', '/apps/hubly/auth', array('OC_Hubly_External', 'authApp'), 'hubly', OC_API::GUEST_AUTH);
+*/

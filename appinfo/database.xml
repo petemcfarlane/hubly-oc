@@ -56,7 +56,7 @@
 				<name>device_id</name>
 				<type>integer</type>
                 <default>0</default>
-				<notnull>false</notnull>
+				<notnull>true</notnull>
 				<length>64</length>
 			</field>
 			<field>
@@ -98,9 +98,8 @@
 				<length>64</length>
 			</field>
         	<field>
-				<name>app_id</name>
-				<type>integer</type>
-                <default>0</default>
+				<name>app_name</name>
+				<type>text</type>
 				<notnull>true</notnull>
 				<length>64</length>
 			</field>
