@@ -1,5 +1,5 @@
-<?php $title ="Privacy Policy"; ?>
-<?php include_once("_header.php"); ?>
+{% set title = "Privacy Policy" %}
+{% include '_header.php' %}
 
 <div class="row">
 	<div class="larege-12 columns">
@@ -8,4 +8,5 @@
 		<p>Part of the way we are able to offer the Hubly service for free to users is that we can anomylize parts of our customer data, obviously removing any personal information, and provide this data to developers, at a cost, for future product development and improvement. This is good for many reasons - it means you can save your data for free, it means developers and engineers can get direct insight into how their products are being used, see what works and what doesn't, and then feed back that information into future products and developments which are again of benefit to yourself! Everyone's a winner.</p>
 	</div>
 </div>
-<?php include_once("_footer.php"); ?>
+
+{% include '_footer.php' %}

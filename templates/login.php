@@ -1,11 +1,11 @@
-<?php $title="Login"; ?>
-<?php include_once("_header.php"); ?>
+{% set title = "Login" %}
+{% include '_header.php' %}
 
 <div class="row">
 	<div class="large-6 columns large-offset-3">
 		<h1>Login</h1>
-		<form method="post" action="<?php p(OCP\Util::linkto('','index.php')); ?>">
-			<input type="hidden" name="redirect_url" value="<?php p(OCP\Util::LinkToRoute("hubly_index")); ?>" />
+		<form method="post" action="/">
+			<input type="hidden" name="redirect_url" value="{{ url("hubly_index") }}" />
 			<label for="login_email">Your email</label>
 			<input id="login_email" type="text" name="user" placeholder="Email"/>
 			<label for="login_password">Your password</label>
@@ -15,4 +15,4 @@
 	</div>
 </div>
 
-<?php include_once("_footer.php"); ?>
+{% include '_footer.php' %}

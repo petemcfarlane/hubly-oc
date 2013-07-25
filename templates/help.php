@@ -1,5 +1,5 @@
-<?php $title="Help"; ?>
-<?php include_once("_header.php"); ?>
+{% set title = "Help" %}
+{% include '_header.php' %}
 
 <div class="row">
 	<div class="larege-12 columns">
@@ -7,4 +7,4 @@
 	</div>
 </div>
 
-<?php include_once("_footer.php"); ?>
+{% include '_footer.php' %}

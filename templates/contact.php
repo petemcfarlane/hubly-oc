@@ -1,5 +1,6 @@
-<?php $title="Contact"; ?>
-<?php include_once("_header.php"); ?>
+{% set title = "Contact" %}
+{% include '_header.php' %}
+
 
 <div class="row">
 	<div class="larege-12 columns">
@@ -9,4 +10,4 @@
 	</div>
 </div>
 
-<?php include_once("_footer.php"); ?>
+{% include '_footer.php' %}

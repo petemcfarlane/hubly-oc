@@ -1,4 +1,6 @@
 <?php
+namespace OCA\Hubly\Lib;
+
 Class OC_Hubly {
 	
 	/**

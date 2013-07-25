@@ -1,10 +1,13 @@
-<?php $title = "Home";
-include_once("_header.php");
-$settings = OC_Hubly::getSettings($_['uid']);
+{% set title = "Home" %}
+{% include '_header.php' %}
+{{ settings }}
+
+$settings = \OCA\Hubly\Lib\App::getSettings($_['uid']);
 $apps = OC_Hubly::getApps($_['uid']);
 $devices = OC_Hubly::getDevices($_['uid']);
 
 if ($settings || $apps || $devices) { ?>
+	{{ 2+2 }}
 	<div class="row">
 		<h1 class="align-middle">Your data</h1>
 	</div>
