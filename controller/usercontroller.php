@@ -1,6 +1,20 @@
 <?php 
-
 namespace OCA\Hubly\Controller;
+
+use \OCA\AppFramework\Controller\Controller;
+use \OCA\AppFramework\Core\API;
+use \OCA\AppFramework\Http\Request;
+
+class UserController extends Controller {
+	private $user;
+	
+	public function __construct(API $api, Request $request, User $user) {
+		parent::__construct($api, $request, $user;
+	}
+}
+
+
+/*namespace OCA\Hubly\Controller;
 
 use \OCA\AppFramework\Controller\Controller;
 use \OCA\AppFramework\Core\API;
@@ -23,7 +37,7 @@ class UserController extends Controller {
 	 * @CSRFExemption
 	 * @IsLoggedInExemption
 	 */
-	public function signup() {
+/*	public function signup() {
 		\OCA\Hubly\Users\User\Test::test_print('does it work');
 		
 		/*try { // try to signup, if successfull, login & go to home page
@@ -39,6 +53,6 @@ class UserController extends Controller {
 			require __DIR__ . '/../index.php';	
 		}*/
 		
-	}
+/*	}
 
-}
+}*/

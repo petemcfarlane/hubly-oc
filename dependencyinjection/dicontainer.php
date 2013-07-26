@@ -5,7 +5,7 @@ use \OCA\AppFramework\DependencyInjection\DIContainer as BaseContainer;
 
 use \OCA\Hubly\Controller\PageController;
 use \OCA\Hubly\Controller\UserController;
-
+	
 class DIContainer extends BaseContainer {
 
     public function __construct(){
