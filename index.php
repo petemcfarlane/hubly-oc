@@ -1,4 +1,4 @@
-<?php
+<?php /*
 OCP\JSON::checkAppEnabled('hubly');
 OCP\App::setActiveNavigationEntry( 'hubly' );
 
@@ -37,4 +37,5 @@ $tmpl->assign('page', $page);
 $tmpl->assign('uname', $uname);
 $tmpl->assign('uid', $uid);
 $tmpl->assign('args', $args);
-$tmpl->printPage();
+$tmpl->printPage(); */
+header("Location: " . \OCP\Util::linkToRoute("hubly_index") );

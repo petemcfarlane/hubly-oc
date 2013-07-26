@@ -5,54 +5,61 @@ use \OCA\AppFramework\Controller\Controller;
 use \OCA\AppFramework\Core\API;
 use \OCA\AppFramework\Http\Request;
 
-class UserController extends Controller {
-	private $user;
-	
-	public function __construct(API $api, Request $request, User $user) {
-		parent::__construct($api, $request, $user;
-	}
-}
+use \OCA\Hubly\Controller\PageController;
+use \OCA\Hubly\Db\User;
 
-
-/*namespace OCA\Hubly\Controller;
-
-use \OCA\AppFramework\Controller\Controller;
-use \OCA\AppFramework\Core\API;
-use \OCA\AppFramework\Http\Request;
-use \OCA\Hubly\Lib\App;
-use \OCA\Hubly\Users\User;
+use \Exception;
 
 class UserController extends Controller {
-	private $user;
+	public $displayName;
+	public $uid;
+	public $uid_confirmation;
+	public $password;
 
-	public function __construct(API $api, Request $request, User $user){
+	public function __construct(API $api, Request $request){
 		parent::__construct($api, $request);
-		$this->user = $user;
+		$this->displayName = $_POST['name'];
+		$this->uid = $_POST['email'];
+		$this->uid_confirmation = $_POST['email_confirmation'];
+		$this->password = $_POST['password'];
 	}
-
-
+	
+	
 	/**
 	 * @IsAdminExemption
 	 * @IsSubAdminExemption
 	 * @CSRFExemption
 	 * @IsLoggedInExemption
 	 */
-/*	public function signup() {
-		\OCA\Hubly\Users\User\Test::test_print('does it work');
-		
-		/*try { // try to signup, if successfull, login & go to home page
-			\OCA\Hubly\Lib\App\OC_Hubly::signup($_POST['email'], $_POST['email_confirmation'], $_POST['password'], $_POST['name'] );
-		} catch (Exception $exception) { // else print error message
-			if ($exception->getMessage() == 'The username is already being used') {
-				$response = json_encode( array( 'status' => 'error', 'message' => "Th email address has already been used", 'code' => 6 ));
-			} else {
-				$response = json_encode( array( 'status' => 'error', 'message' => $exception->getMessage(), 'code' => $exception->getCode() ) );
+	public function signup($groups=array('hubly'), $quota="100 MB"){
+		try { // try to signup, if successfull, login and go to home page
+			if (!$this->displayName) throw new Exception('Please provide a display name so we know what to call you', 1);	
+			if (!$this->uid) throw new Exception('Email address must be provided, we promise not to spam you', 2);
+			if (!$this->uid_confirmation) throw new Exception('Please re-enter your email to make sure you got it right', 3);
+			if ($this->uid !== $this->uid_confirmation) throw new Exception('The Email addresses you entered didn\'t match', 4);
+			if (strlen($this->password)<6) throw new Exception('Please choose a password of at least 6 characters', 5);
+			
+			$user = new \OC_User;
+			$user->createUser($this->uid, $this->password);
+			$user->setDisplayName($this->uid, $this->displayName);
+			\OC_Preferences::setValue($this->uid, 'files', 'quota', $quota);
+			foreach( $groups as $i ) {
+				if(!\OC_Group::groupExists($i)) {
+					\OC_Group::createGroup($i);
+				}
+				\OC_Group::addToGroup( $this->uid, $i );
 			}
-			$page = "signup";
-			$args = array("name" => $_POST['name'], "email" => $_POST['email']);
-			require __DIR__ . '/../index.php';	
-		}*/
-		
-/*	}
-
-}*/
+			$user->login($this->uid, $this->password);
+			$location = \OCP\Util::linkToRoute("hubly_index");
+			header( 'Location: '.$location );
+		} catch (Exception $exception) {
+			if ($exception->getMessage() == 'The username is already being used') {
+				$params['response'] = array( 'status' => 'error', 'message' => "The email address has already been used", 'code' => 6 );
+			} else {
+				$params['response'] = array( 'status' => 'error', 'message' => $exception->getMessage(), 'code' => $exception->getCode() );
+			}
+			$params['args'] = array("name" => $this->displayName, "email" => $this->uid);
+			return $this->render('signup', $params, '');
+		}
+	}
+}

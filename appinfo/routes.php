@@ -17,7 +17,6 @@ $this->create('hubly_signup', '/signup')->post()->action(function($params){
 	App::main('UserController', 'signup', $params, new DIContainer());
 });
 
-
 $this->create('hubly_login', '/login')->get()->action(function($params){
 	App::main('PageController', 'login', $params, new DIContainer());
 });

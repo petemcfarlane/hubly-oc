@@ -22,7 +22,7 @@
 					<a href="{{ url('hubly_index') }}" class="header-logo">
 						<img src="/apps/hubly/img/hubly-logo.svg" alt="Hubly" class="hubly-logo" />
 					</a>
-					{% if uid %}
+					{% if uname %}
 						<a href="{{ url('hubly_index') }}" class="right">{{ uname }}</a>
 					{% else %}
 						<a href="{{ url('hubly_login') }}" class="right">Login</a>

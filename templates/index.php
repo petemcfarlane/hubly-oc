@@ -49,11 +49,11 @@ if ($settings || $apps || $devices) { ?>
 				<p>You haven't added any devices yet, so it looks a little empty</p>
 			<?php } ?>
 	    </div>
-<?php } else { ?>
+<?php //} else { ?>
 	<div class="row">
 		<h1 class="align-center large-12 columns">Welcome to Hubly</h1>
 		<p class="large-12 columns">Hello <?php p($_['uname']); ?>, thanks for giving Hubly a try. It looks like you haven't added any devices, apps or saved any data yet so there's not a lot to see, but this is the place where you will be able to see all of that informatino in the near future.</p>
 		<h2 class="large-12 columns">So let's get you set up!</h2>
 	</div>
-<?php } ?>
+<?php //} ?>
 <?php include_once("_footer.php"); ?>

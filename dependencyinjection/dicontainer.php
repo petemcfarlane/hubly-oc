@@ -22,7 +22,7 @@ class DIContainer extends BaseContainer {
 		};
 		
 		$this['UserController'] = function($c){
-			return new UserController($c['API'], $c['Request'], $c['User']);
+			return new UserController($c['API'], $c['Request']);
 		};
 	}
 }

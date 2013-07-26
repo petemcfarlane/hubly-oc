@@ -47,8 +47,8 @@ class PageController extends Controller {
 	 * @IsLoggedInExemption
 	 */
 	public function signup() {
-		$response = array("code"=>7, "message"=>"error", "status"=>"success");
-		$args = array("name"=>"testname", "email"=>"email@test.com");
+		//$response = array("code"=>7, "message"=>"error", "status"=>"success");
+		//$args = array("name"=>"testname", "email"=>"email@test.com");
 		$params['response'] = isset($response) ? $response : NULL;
 		$params['args'] = isset($args) ? $args : NULL;
 		return $this->render('signup', $params, '');
