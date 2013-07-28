@@ -2,9 +2,15 @@
 namespace OCA\Hubly\DependencyInjection;
 
 use \OCA\AppFramework\DependencyInjection\DIContainer as BaseContainer;
+use \OCA\AppFramework\Db\API;
 
 use \OCA\Hubly\Controller\PageController;
 use \OCA\Hubly\Controller\UserController;
+
+use \OCA\Hubly\External\SettingsAPI;
+
+use \OCA\Hubly\Db\SettingMapper;
+
 	
 class DIContainer extends BaseContainer {
 
@@ -20,9 +26,13 @@ class DIContainer extends BaseContainer {
         $this['PageController'] = function($c){
             return new PageController($c['API'], $c['Request']);
 		};
-		
+				
 		$this['UserController'] = function($c){
 			return new UserController($c['API'], $c['Request']);
+		};
+
+		$this['SettingsAPI'] = function($c){
+			return new SettingsAPI($c['API'], $c['Request']);
 		};
 	}
 }

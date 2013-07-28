@@ -3,7 +3,6 @@
 <div class="row">
 	<div class="large-6 columns large-offset-3">
 		<h1>Sign up</h1>
-
 		<form method="post" action="{{ url('hubly_signup') }}">
 			<label for="sign_up_display_name" class="hide">Display name</label>
 			<input id="sign_up_display_name" type="text" name="name" placeholder="Your Name" {{ response.code == 1 ? 'class="error"' }}{% if args.name %}value="{{ args.name }}" {% endif %}/>
@@ -17,5 +16,4 @@
 		</form>
 	</div>
 </div>
-
 {% include '_footer.php' %}
