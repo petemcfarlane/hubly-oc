@@ -12,20 +12,18 @@ class SettingMapper extends Mapper {
       parent::__construct($api, 'hubly_data'); // tablename is hubly_data
     }
 	
+	
 	protected function findAllRows($sql, $params, $limit=null, $offset=null) {
 		$result = $this->execute($sql, $params, $limit, $offset);
-
-		$items = array();
-
+		$settings = array();
 		while($row = $result->fetchRow()){
-			$item = new Item();
-			$item->fromRow($row);
-
-			array_push($items, $item);
+			$setting = new Setting();
+			$setting->fromRow($row);
+			array_push($settings, $setting);
 		}
-
-		return $items;
+		return $settings;
 	}
+
 
 	public function findAll($id) {
         $sql = 'SELECT * FROM `' . $this->getTableName() . '` WHERE `user_id` = ? ';
@@ -54,5 +52,20 @@ class SettingMapper extends Mapper {
         $settings = $this->findAllRows($sql, array($userId), $limit);
         return $settings;
 	}
-
+	
+	public function save($setting) {
+		$sql = 'INSERT INTO `' . $this->getTableName() . '` (`user_id`, `app_name`, `device_id`, `key`, `value`) VALUES (?,?,?,?,?)';
+		$params = array(
+			$setting->getUserId(),
+			$setting->getAppName(),
+			$setting->getDeviceId(),
+			$setting->getKey(),
+			$setting->getValue()
+		);
+		
+		$this->execute($sql, $params);
+		
+		$setting->setId($this->api->getInsertId());
+		return $setting;
+	}
 }

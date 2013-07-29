@@ -5,24 +5,66 @@ use \OCA\AppFramework\Db\Entity;
 
 class Setting extends Entity {
 
-    // Note: a field id is set automatically by the parent class
-    public $deviceId;
-    public $appId;
-    public $dataKey;
-    public $dataValue;
-
-    public function __construct(){
-        // cast timestamp to an int when fromRow is being called
-        // the second parameter is the argument that is passed to
-        // the php function settype()
-        $this->addType('timestamp', 'int');
-    }
+	public $userId;
+	public $appName;
+	protected $deviceId; // don't include in api response
+	public $key;
+	public $value;
 
 
-    // transform username to lower case
-    public function setName($name){
-        $name = strtolower($name);
-        parent::setName($name);
-    }
+	public function __construct($fromRow=null){
+		if ($fromRow) $this->fromRow($fromRow);
+	}
+
+	public function getId() {
+		return $this->id;
+	}
+
+	public function getUserId() {
+		return $this->userId;
+	}
+		
+	public function getAppName() {
+		return $this->appName;
+	}
+	
+	public function getDeviceId() {
+		return $this->deviceId;
+	}
+
+	public function getKey() {
+		return $this->key;
+	}
+
+	public function getValue() {
+		return $this->value;
+	}
+
+
+
+	public function setId($id) {
+		$this->id = $id;
+	}
+
+	public function setUserId($userId) {
+		$this->userId = $userId;
+	}
+		
+	public function setAppName($appName) {
+		$this->appName = $appName;
+	}
+	
+	public function setDeviceId($deviceId) {
+		$this->deviceId = $deviceId;
+	}
+
+	public function setKey($key) {
+		$this->key = $key;
+	}
+
+	public function setValue($value) {
+		$this->value = $value;
+	}
+
 
 }

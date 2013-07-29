@@ -15,7 +15,8 @@ class Item extends Entity {
         // cast timestamp to an int when fromRow is being called
         // the second parameter is the argument that is passed to
         // the php function settype()
-         $this->addType('timestamp', 'int');
+        $this->addType('timestamp', 'int');
+		// $this->name ="Joe";
     }
 
 

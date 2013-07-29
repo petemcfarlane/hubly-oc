@@ -57,20 +57,33 @@ class AppMapper extends Mapper {
 	
 	
 	public function authenticateApp($id, $token, $userId) {
-		$sql = 'SELECT id FROM `' . $this->getTableName() . '` WHERE `id` = ? AND `token` = ? AND `user_id` = ?';
+		$sql = 'SELECT * FROM `' . $this->getTableName() . '` WHERE `id` = ? AND `token` = ? AND `user_id` = ?';
         $row = $this->findOneQuery($sql, array($id, $token, $userId));
-        $app = new App();
-        $app->fromRow($row);
+        $app = new App($row);
         return $app;
 	}
 	
 	
 	public function getAppName($id) {
-		$sql = 'SELECT name FROM `' . $this->getTableName() . '` WHERE `id` = ?';
+		$sql = 'SELECT * FROM `' . $this->getTableName() . '` WHERE `id` = ?';
         $row = $this->findOneQuery($sql, array($id));
-        $app = new App();
-        $app->fromRow($row);
-        return $app->name;	
+        $app = new App($row);
+        return $app->getName();	
+	}
+	
+	public function save($app) {
+		$sql = 'INSERT INTO '. $this->getTableName() . '(name, user, path) VALUES(?, ?, ?)';
+
+		$params = array(
+			$item->getName(),
+			$item->getUser(),
+			$item->getPath()
+		);
+
+		$this->execute($sql, $params);
+
+		$item->setId($this->api->getInsertId());
+		return $item;
 	}
 
 }

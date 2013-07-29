@@ -5,24 +5,18 @@ use \OCA\AppFramework\Db\Entity;
 
 class App extends Entity {
 
-    // Note: a field id is set automatically by the parent class
-    public $userId;
-    public $deviceId;
-    public $name;
-    public $token;
+	public $userId;
+	public $deviceId;
+	public $name;
+	public $token;
 
-    public function __construct(){
-        // cast timestamp to an int when fromRow is being called
-        // the second parameter is the argument that is passed to
-        // the php function settype()
-        $this->addType('timestamp', 'int');
-    }
+	public function __construct($fromRow=null){
+		if ($fromRow) $this->fromRow($fromRow);
+	}
 
-
-    // transform username to lower case
-    public function setName($name){
-        $name = strtolower($name);
-        parent::setName($name);
-    }
+	
+	public function getName() {
+		return $this->name;
+	}
 
 }

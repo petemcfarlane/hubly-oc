@@ -22,7 +22,6 @@ class PageController extends Controller {
 
 	public $uid;
 	public $uname;
-	public $request;
 
 	public function __construct(API $api, Request $request){
 		parent::__construct($api, $request);

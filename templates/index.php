@@ -10,7 +10,7 @@
 			{% if settings %}
 				<ul class="preference-list">
 					{% for setting in settings %}
-				        <li><a href="#">{{ setting.dataKey	 }}</a></li>
+				        <li><a href="#">{{ setting.key }}</a></li>
 				    {% endfor %}
 		        </ul>
 				{# if settings|length > 10 OC_Hubly::paginate() #} 

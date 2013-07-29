@@ -52,12 +52,8 @@ $this->create('hubly_settings', '/settings')->get()->action(function($params){
 
 // External Methods /ocs/v1.php/
 
-$this->create('hubly_api_settings_index', '/api/settings')->get()->action(function($params){
+$this->create('hubly_api_settings', '/api/settings')->get()->action(function($params){
 	App::main('SettingsAPI', 'getSettings', $params, new DIContainer());
-});
-
-$this->create('hubly_api_settings_create', '/api/settings')->post()->action(function($params){
-	App::main('SettingsAPI', 'createSettings', $params, new DIContainer());
 });
 
 
