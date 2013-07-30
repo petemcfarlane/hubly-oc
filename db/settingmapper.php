@@ -16,7 +16,7 @@ class SettingMapper extends Mapper {
 	protected function findAllRows($sql, $params, $limit=null, $offset=null) {
 		$result = $this->execute($sql, $params, $limit, $offset);
 		$settings = array();
-		while($row = $result->fetchRow()){
+		while ( $row = $result->fetchRow() ) {
 			$setting = new Setting();
 			$setting->fromRow($row);
 			array_push($settings, $setting);
@@ -24,28 +24,7 @@ class SettingMapper extends Mapper {
 		return $settings;
 	}
 
-
-	public function findAll($id) {
-        $sql = 'SELECT * FROM `' . $this->getTableName() . '` WHERE `user_id` = ? ';
-		$rows = $this->findAllRows($sql, array("foo@bar.com"));
-		return $rows;
-	}
-	
-    public function find($id, $userId){
-      $sql = 'SELECT * FROM `' . $this->getTableName() . '` WHERE `id` = ? AND `user_id` = ?';
-      // use findOneQuery to throw exceptions when no entry or more than one
-      // entries were found
-      $row = $this->findOneQuery($sql, array($id, $userId));
-      $feed = new Item();
-      $feed->fromRow($row);
-      return $feed;
-    }
-
-    public function findByApp($appName, $userId){
-      $sql = 'SELECT * FROM `' . $this->getTableName() . '` WHERE `app_name` = ? AND `user_id` = ?';
-      $settings = $this->findAllRows($sql, array($appName, $userId));
-      return $settings;
-    }
+	// For Users (Browser)
 	
 	public function findAllUserSettings($userId, $limit=10) {
         $sql = 'SELECT * FROM `' . $this->getTableName() . '` WHERE `user_id` = ?';
@@ -53,19 +32,42 @@ class SettingMapper extends Mapper {
         return $settings;
 	}
 	
-	public function save($setting) {
+	
+	// For Apps (API)
+	
+	public function create($setting) {
 		$sql = 'INSERT INTO `' . $this->getTableName() . '` (`user_id`, `app_name`, `device_id`, `key`, `value`) VALUES (?,?,?,?,?)';
-		$params = array(
-			$setting->getUserId(),
-			$setting->getAppName(),
-			$setting->getDeviceId(),
-			$setting->getKey(),
-			$setting->getValue()
-		);
-		
+		$params = array( $setting->getUserId(), $setting->getAppName(), $setting->getDeviceId(), $setting->getKey(), 																												$setting->getValue() );
 		$this->execute($sql, $params);
-		
-		$setting->setId($this->api->getInsertId());
+		$setting->setId($this->api->getInsertId($this->getTableName()));
 		return $setting;
 	}
+	
+    public function findByApp($appName, $userId){
+		$sql = 'SELECT * FROM `' . $this->getTableName() . '` WHERE `app_name` = ? AND `user_id` = ?';
+		$settings = $this->findAllRows($sql, array($appName, $userId));
+		return $settings;
+    }
+	
+	public function findByKey($setting) {
+		$sql = 'SELECT * FROM `' . $this->getTableName() . '` WHERE `user_id` = ? AND `app_name` = ? AND `key` = ? ';
+		$params = array( $setting->getUserId(), $setting->getAppName(), $setting->getKey() );
+		$row = $this->findOneQuery($sql, $params);
+		$setting = new Setting($row);
+		return $setting;
+	}
+	
+	public function updateValue($setting) {
+		$sql = 'UPDATE `' . $this->getTableName() . '` SET `value` = ? WHERE `user_id` = ? AND `app_name` = ? AND `key` = ?';
+		$params = array( $setting->getValue(), $setting->getUserId(), $setting->getAppName(), $setting->getKey() );
+		$this->execute($sql, $params);
+	}
+	
+	public function deleteByKey($setting) {
+		$sql = 'DELETE FROM `' . $this->getTableName() . '` WHERE `user_id` = ? AND `app_name` = ? AND `key` = ?';
+		$params = array( $setting->getUserId(), $setting->getAppName(), $setting->getKey() );
+		$this->execute($sql, $params);
+	}
+
+
 }

@@ -11,7 +11,8 @@ if (\OCP\App::isEnabled('appframework') ) {
 	$api->addNavigationEntry(array(
 		'id' => $api->getAppName(),
 		'order' => 10,
-		'href' => $api->linkToRoute('hubly_index'),
+//		'href' => $api->linkToRoute('hubly_index'),
+		'href' => '/index.php',
 		'icon' => $api->imagePath('hubly-logo-nav.svg'),
 		'name' => $api->getTrans()->t('Hubly')
 	));

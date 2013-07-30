@@ -50,7 +50,7 @@ class UserController extends Controller {
 				\OC_Group::addToGroup( $this->uid, $i );
 			}
 			$user->login($this->uid, $this->password);
-			$location = \OCP\Util::linkToRoute("hubly_index");
+			$location = \OCP\Util::linkToRoute("hubly.page.index");
 			header( 'Location: '.$location );
 		} catch (Exception $exception) {
 			if ($exception->getMessage() == 'The username is already being used') {

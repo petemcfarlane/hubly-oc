@@ -5,7 +5,7 @@
 	<div class="large-6 columns large-offset-3">
 		<h1>Login</h1>
 		<form method="post" action="/">
-			<input type="hidden" name="redirect_url" value="{{ url("hubly_index") }}" />
+			<input type="hidden" name="redirect_url" value="{{ url("hubly.page.index") }}" />
 			<label for="login_email">Your email</label>
 			<input id="login_email" type="text" name="user" placeholder="Email"/>
 			<label for="login_password">Your password</label>

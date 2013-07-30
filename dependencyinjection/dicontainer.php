@@ -6,8 +6,7 @@ use \OCA\AppFramework\Db\API;
 
 use \OCA\Hubly\Controller\PageController;
 use \OCA\Hubly\Controller\UserController;
-
-use \OCA\Hubly\External\SettingsAPI;
+use \OCA\Hubly\Controller\SettingController;
 
 use \OCA\Hubly\Db\SettingMapper;
 
@@ -31,8 +30,9 @@ class DIContainer extends BaseContainer {
 			return new UserController($c['API'], $c['Request']);
 		};
 
-		$this['SettingsAPI'] = function($c){
-			return new SettingsAPI($c['API'], $c['Request']);
+		$this['SettingController'] = function($c){
+			return new SettingController($c['API'], $c['Request']);
 		};
+		
 	}
 }

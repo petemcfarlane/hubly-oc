@@ -9,11 +9,7 @@ use \OCA\AppFramework\Http\TemplateResponse;
 
 use \OCA\Hubly\Db\Setting;
 use \OCA\Hubly\Db\SettingMapper;
-
-use \OCA\Hubly\Db\App;
 use \OCA\Hubly\Db\AppMapper;
-
-use \OCA\Hubly\Db\Device;
 use \OCA\Hubly\Db\DeviceMapper;
 
 use \OCA\Hubly\Controller\UserController;
@@ -29,12 +25,20 @@ class PageController extends Controller {
 		$user = $userController->user;
 		if ($user->isLoggedIn()) {
 			$this->uid = $user->getUser();
+			$this->params['uid'] = $user->getUser();
 			$this->uname = $user->getDisplayName();
+			$this->params['uname'] = $user->getDisplayName();
 		}
+		$this->settingMapper = new SettingMapper($this->api);
+		$this->appMapper = new AppMapper($this->api);
+		$this->deviceMapper = new DeviceMapper($this->api);
+		$this->params['response'] = isset($response) ? $response : NULL;
+		$this->params['args'] = isset($args) ? $args : NULL;
+
 	}
 	
 		
-	protected function redirect($url='hubly_index') {
+	protected function redirect($url='hubly.page.index') {
 		$response = new TemplateResponse($this->api, 'guest_index');
 		$response->addHeader('Location', \OCP\Util::linkToRoute($url) );
 		return $response;
@@ -49,37 +53,53 @@ class PageController extends Controller {
 	 */
 	public function index() {
 		if ( !$this->uid ) return $this->render('guest_index', array(), '');
-		$params['uid'] = $this->uid;
-		$params['uname'] = $this->uname;
 		
-		$settingMapper = new SettingMapper($this->api);
-		$params['settings'] = $settingMapper->findAllUserSettings($this->uid);
+		$this->params['settings'] = $this->settingMapper->findAllUserSettings($this->uid);
+		$this->params['apps'] = $this->appMapper->findAllUserApps($this->uid);
+		$this->params['devices'] = $this->deviceMapper->findAllUserDevices($this->uid	);
 		
-		$appMapper = new AppMapper($this->api);
-		$params['apps'] = $appMapper->findAllUserApps($this->uid);
-		
-		$deviceMapper = new DeviceMapper($this->api);
-		$params['devices'] = $deviceMapper->findAllUserDevices($this->uid	);
-		
-		$params['response'] = isset($response) ? $response : NULL;
-		$params['args'] = isset($args) ? $args : NULL;
-		
-		return $this->render('index', $params, '');
+		return $this->render('index', $this->params, '');
 	}
 	
-		
 	/**
 	 * @IsAdminExemption
 	 * @IsSubAdminExemption
 	 * @CSRFExemption
 	 * @IsLoggedInExemption
 	 */
-	public function loadPage() {
+	public function contact() {
+		return $this->render('contact', $this->params, '');
+	}
+	
+	/**
+	 * @IsAdminExemption
+	 * @IsSubAdminExemption
+	 * @CSRFExemption
+	 * @IsLoggedInExemption
+	 */
+	public function privacyPolicy() {
+		return $this->render('privacy_policy', $this->params, '');
+	}
+	
+	/**
+	 * @IsAdminExemption
+	 * @IsSubAdminExemption
+	 * @CSRFExemption
+	 * @IsLoggedInExemption
+	 */
+	public function about() {
+		return $this->render('about', $this->params, '');
+	}
+	
+	/**
+	 * @IsAdminExemption
+	 * @IsSubAdminExemption
+	 * @CSRFExemption
+	 * @IsLoggedInExemption
+	 */
+	public function help() {
 		if ( !$this->uid ) return $this->render($page, array(), '');
-		$page = $this->request->page;
-		$params['uid'] = $this->uid;
-		$params['uname'] = $this->uname;
-		return $this->render($page, $params, '');
+		return $this->render('help', $this->params, '');
 	}
 	
 
@@ -90,8 +110,8 @@ class PageController extends Controller {
 	 * @IsLoggedInExemption
 	 */
 	public function login() {
-		if ($this->uid) return $this->redirect('hubly_index');
-		return $this->render('login', array(), '');
+		if ($this->uid) return $this->redirect('hubly.page.index');
+		return $this->render('login', $this->params, '');
 	}
 	
 	
@@ -102,10 +122,8 @@ class PageController extends Controller {
 	 * @IsLoggedInExemption
 	 */
 	public function signup() {
-		if ($this->uid) return $this->redirect('hubly_index');
-		$params['response'] = isset($response) ? $response : NULL;
-		$params['args'] = isset($args) ? $args : NULL;
-		return $this->render('signup', $params, ''); 
+		if ($this->uid) return $this->redirect('hubly.page.index');
+		return $this->render('signup', $this->params, ''); 
 	}
 
 	
@@ -116,17 +134,27 @@ class PageController extends Controller {
 	 * @IsLoggedInExemption
 	 */
 	public function settings() {
-		if ( !$this->uid ) return $this->redirect('hubly_signup');
-		$params['uid'] = $this->uid;
-		$params['uname'] = $this->uname;
-		
-		$settingMapper = new SettingMapper($this->api);
-		$params['settings'] = $settingMapper->findAllUserSettings($this->uid);
-		
-		$params['response'] = isset($response) ? $response : NULL;
-		$params['args'] = isset($args) ? $args : NULL;
-		
-		return $this->render('settings', $params, '');
+		if ( !$this->uid ) return $this->redirect('hubly.page.signup');
+		$this->params['settings'] = $this->settingMapper->findAllUserSettings($this->uid);
+		return $this->render('settings', $this->params, '');
+	}
+
+	
+	/**
+	 * @IsAdminExemption
+	 * @IsSubAdminExemption
+	 * @CSRFExemption
+	 * @IsLoggedInExemption
+	 */
+	public function showSetting() {
+		if ( !$this->uid ) return $this->redirect('hubly.page.signup');
+		$setting = new Setting;
+		$setting->setUserId($this->uid);
+		$setting->setAppName($this->request->appName);
+		$setting->setKey($this->request->key);
+		$setting = $this->settingMapper->findByKey($setting);
+		$this->params['settings'] = $setting;
+		return $this->render('settings', $this->params, '');
 	}
 
 	
@@ -137,17 +165,9 @@ class PageController extends Controller {
 	 * @IsLoggedInExemption
 	 */
 	public function devices() {
-		if ( !$this->uid ) return $this->redirect('hubly_signup');
-		$params['uid'] = $this->uid;
-		$params['uname'] = $this->uname;
-		
-		$deviceMapper = new DeviceMapper($this->api);
-		$params['devices'] = $deviceMapper->findAllUserDevices($this->uid);
-		
-		$params['response'] = isset($response) ? $response : NULL;
-		$params['args'] = isset($args) ? $args : NULL;
-		
-		return $this->render('devices', $params, '');
+		if ( !$this->uid ) return $this->redirect('hubly.page.signup');
+		$this->params['devices'] = $this->deviceMapper->findAllUserDevices($this->uid);
+		return $this->render('devices', $this->params, '');
 	}
 
 	
@@ -158,16 +178,8 @@ class PageController extends Controller {
 	 * @IsLoggedInExemption
 	 */
 	public function apps() {
-		if ( !$this->uid ) return $this->redirect('hubly_signup');
-		$params['uid'] = $this->uid;
-		$params['uname'] = $this->uname;
-		
-		$appMapper = new AppMapper($this->api);
-		$params['apps'] = $appMapper->findAllUserApps($this->uid);
-		
-		$params['response'] = isset($response) ? $response : NULL;
-		$params['args'] = isset($args) ? $args : NULL;
-		
-		return $this->render('apps', $params, '');
+		if ( !$this->uid ) return $this->redirect('hubly.page.signup');
+		$this->params['apps'] = $this->appMapper->findAllUserApps($this->uid);
+		return $this->render('apps', $this->params, '');
 	}
 }

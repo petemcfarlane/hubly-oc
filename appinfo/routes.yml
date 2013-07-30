@@ -1,0 +1,57 @@
+routes:
+  - name: page#index
+    url: /
+    verb: GET
+
+  - name: page#signup
+    url: /signup
+    verb: GET
+
+  - name: user#signup
+    url: /signup
+    verb: POST
+
+  - name: page#login
+    url: /login
+    verb: GET
+
+  - name: page#about
+    url: /about
+    verb: GET
+
+  - name: page#help
+    url: /help
+    verb: GET
+
+  - name: page#contact
+    url: /contact
+    verb: GET
+
+  - name: page#privacy_policy
+    url: /privacy-policy
+    verb: GET
+
+  - name: page#settings
+    url: /settings
+    verb: GET
+
+  - name: page#devices
+    url: /devices
+    verb: GET
+
+  - name: page#apps
+    url: /apps
+    verb: GET
+
+  - name: page#showSetting
+    url: /settings/{appName}/{key}
+    verb: GET
+
+# External API
+#  - url: /api/settings
+#    verb: GET
+#    controller: SettingsAPI
+#    action: index
+resources:
+    setting:
+      url: /api/settings

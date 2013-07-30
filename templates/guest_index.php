@@ -6,7 +6,7 @@
 	</div>
 	<div class="large-6 columns">
 		<h3 class="primary">Sign up for free</h3>
-		<form method="post" action="{{ url('hubly_signup') }}">
+		<form method="post" action="{{ url('hubly.page.signup') }}">
 			<label for="sign_up_display_name" class="hide">Display name</label>
 			<input id="sign_up_display_name" type="text" name="name" placeholder="Your Name" />
 			<label for="sign_up_email" class="hide">Email address</label>

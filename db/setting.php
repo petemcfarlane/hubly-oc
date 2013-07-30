@@ -4,7 +4,7 @@ namespace OCA\Hubly\Db;
 use \OCA\AppFramework\Db\Entity;
 
 class Setting extends Entity {
-
+	
 	public $userId;
 	public $appName;
 	protected $deviceId; // don't include in api response

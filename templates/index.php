@@ -6,7 +6,7 @@
 	</div>
 	<div class="row gray-bg">
 		<div class="large-4 columns ">
-	        <h3><a href="{{ url('hubly_settings') }}">Settings</a></h3>
+	        <h3><a href="{{ url('hubly.page.settings') }}">Settings</a></h3>
 			{% if settings %}
 				<ul class="preference-list">
 					{% for setting in settings %}
@@ -20,7 +20,7 @@
 	    </div>
 
 	    <div class="large-4 columns">
-	        <h3><a href="{{ url('hubly_apps') }}">Apps</a></h3>
+	        <h3><a href="{{ url('hubly.page.apps') }}">Apps</a></h3>
 			{% if apps %}
 				<ul class="apps-list">
 					{% for app in apps %}
@@ -34,7 +34,7 @@
 	    </div>
 
 	    <div class="large-4 columns">
-	        <h3><a href="{{ url('hubly_devices') }}">Devices</a></h3>
+	        <h3><a href="{{ url('hubly.page.devices') }}">Devices</a></h3>
 			{% if devices %}
 				<ul class="device-list">
 					{% for device in devices %}

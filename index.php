@@ -38,4 +38,4 @@ $tmpl->assign('uname', $uname);
 $tmpl->assign('uid', $uid);
 $tmpl->assign('args', $args);
 $tmpl->printPage(); */
-header("Location: " . \OCP\Util::linkToRoute("hubly_index") );
+header("Location: " . \OCP\Util::linkToRoute("hubly.page.index") );
