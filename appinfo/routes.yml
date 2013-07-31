@@ -15,6 +15,13 @@ routes:
     url: /login
     verb: GET
 
+  - name: user#login
+    url: /login
+    verb: POST
+
+  - name: user#logout
+    url: /logout
+
   - name: page#about
     url: /about
     verb: GET
