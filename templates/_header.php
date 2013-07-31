@@ -18,9 +18,8 @@
 		<header>
 			<div class="row">
 				<nav class="large-12 columns">
-					<a href="{{ url('hubly.page.index') }}" class="left standard">Home</a>
 					<a href="{{ url('hubly.page.index') }}" class="header-logo">
-						<img src="/apps/hubly/img/hubly-logo.svg" alt="Hubly" class="hubly-logo" />
+						<img src="/apps/hubly/img/hubly-logo-90.svg" alt="Hubly" class="hubly-logo" />
 					</a>
 					{% if uname %}
 						<a href="{{ url('hubly.page.index') }}" class="right">{{ uname }}</a>

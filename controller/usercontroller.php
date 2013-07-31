@@ -6,10 +6,7 @@ use \OCA\AppFramework\Core\API;
 use \OCA\AppFramework\Http\Request;
 use \OCA\AppFramework\Http\JSONResponse;
 use \OCA\AppFramework\Http\TemplateResponse;
-
-use \OCA\Hubly\Controller\PageController;
 use \OCP\User;
-
 use \Exception;
 
 class UserController extends Controller {
@@ -75,21 +72,22 @@ class UserController extends Controller {
 			if ( $this->request->email !== $this->request->email_confirmation ) 
 												throw new Exception('The Email addresses you entered didn\'t match', 4);
 			if ( strlen($this->request->password) < 6 ) throw new Exception('Please choose a password of at least 6 characters', 5);
-			if ( !\OC_User::createUser($this->request->email, $this->request->password) ) throw new Exception('User creation failed');
+			if ( !\OC_User::createUser($this->request->email, $this->request->password) ) 
+																			throw new Exception('User creation failed');
 			\OC_User::setDisplayName($this->request->email, $this->request->name);
-			foreach( $groups as $i ) {
-				if(!\OC_Group::groupExists($i)) {
-					\OC_Group::createGroup($i);
+			foreach( $groups as $group ) {
+				if(!\OC_Group::groupExists($group)) {
+					\OC_Group::createGroup($group);
 				}
-				\OC_Group::addToGroup( $this->request->email, $i );
+				\OC_Group::addToGroup( $this->request->email, $group );
 			}
 			if ( !\OC_User::login($this->request->email, $this->request->password) ) throw new Exception('Login failed');
 			return $this->redirect('hubly.page.index');
 		} catch (Exception $exception) {
 			if ($exception->getMessage() == 'The username is already being used') {
-				$params['response'] = array( 'status' => 'error', 'message' => "The email address has already been used", 'code' => 6 );
+				$params['response'] = array( 'status'=>'error', 'message'=>"The email address has already been used", 'code'=>6 );
 			} else {
-				$params['response'] = array( 'status' => 'error', 'message' => $exception->getMessage(), 'code' => $exception->getCode() );
+				$params['response'] = array( 'status'=>'error', 'message'=>$exception->getMessage(), 'code'=>$exception->getCode() );
 			}
 			$params['args'] = array("name" => $this->request->name, "email" => $this->request->email);
 			return $this->render('signup', $params, '');
