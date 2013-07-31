@@ -52,8 +52,7 @@ routes:
 resources:
     setting:
       url: /api/settings
-      param: key
+      params: key
 
     app:
       url: /api/apps
-
