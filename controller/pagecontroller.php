@@ -98,7 +98,6 @@ class PageController extends Controller {
 	 * @IsLoggedInExemption
 	 */
 	public function help() {
-		if ( !$this->uid ) return $this->render($page, array(), '');
 		return $this->render('help', $this->params, '');
 	}
 	

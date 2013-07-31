@@ -10,7 +10,9 @@ html,body {overflow:auto}
 .gray-bg a {color: #333}
 ul {list-style:none}
 .align-center{text-align:center}
-
+.font-1-8 {font-size:1.8em}
+.bold {font-weight:bold}
+html.placeholder label {display:none}
 .orbit-timer {display:none}
 .orbit-container {margin-bottom:1.675em}
 .orbit-next, .orbit-prev {opacity:0; -webkit-transition:opacity.4s ease-in; -moz-transition:opacity .4s ease-in; -o-transition:opacity .4s ease-in; transition:opacity .4s ease-in;}

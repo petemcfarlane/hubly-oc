@@ -48,9 +48,11 @@
 	    </div>
 {% else %}
 	<div class="row">
-		<h1 class="align-center large-12 columns">Welcome to Hubly</h1>
-		<p class="large-12 columns">Hello {{ uname }}, thanks for giving Hubly a try. It looks like you haven't added any devices, apps or saved any data yet so there's not a lot to see, but this is the place where you will be able to see all of that informatino in the near future.</p>
+		<div class="large-12 columns">
+		<h1 class="align-center">Welcome to Hubly</h1>
+		<p>Hello {{ uname }}, thanks for giving Hubly a try. It looks like you haven't added any devices, apps or saved any data yet so there's not a lot to see, but this is the place where you will be able to see all of that information in the near future.</p>
 		<h2 class="large-12 columns">So let's get you set up!</h2>
+		</div>
 	</div>
 {% endif %}
 {% include "_footer.php" %}

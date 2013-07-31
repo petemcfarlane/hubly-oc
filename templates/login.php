@@ -12,6 +12,7 @@
 			<input id="login_password" type="password" name="password" placeholder="Password" />
 			<input type="submit" value="Login" class="button" />
 		</form>
+		<p><a href="{{ url('hubly.page.signup') }}">Click here if you need to sign up</a></p>
 	</div>
 </div>
 

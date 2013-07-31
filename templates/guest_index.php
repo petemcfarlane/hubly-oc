@@ -2,7 +2,7 @@
 
 <div class="row">
 	<div class="large-6 columns">
-		<h3>Hubly is a free to use personal hub where you can safely store and sync your personal settings for many apps across multiple platforms and devices.</h3>
+		<p class="font-1-8 bold">Hubly is a free to use personal hub where you can safely store and sync your personal settings for many apps across multiple platforms and devices.</p>
 	</div>
 	<div class="large-6 columns">
 		<h3 class="primary">Sign up for free</h3>
