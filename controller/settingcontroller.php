@@ -9,6 +9,7 @@ use \OCA\AppFramework\Http\Http;
 use \OCA\Hubly\Db\SettingMapper;
 use \OCA\Hubly\Db\Setting;
 use \OCA\Hubly\Db\AppMapper;
+use \OCA\Hubly\Db\App;
 use \Exception;
 
 class SettingController extends Controller {
@@ -22,15 +23,68 @@ class SettingController extends Controller {
 		$this->settingMapper = new SettingMapper($this->api);
 	}
 	
-	
-	protected function authorizeAppRequest() {
-		if ( !isset($this->request->app_id) ) throw new Exception("app_id must be set");
-		if ( !isset($this->request->token)  )  throw new Exception("token must be set");
-		if ( !isset($this->request->user_id)) throw new Exception("user_id must be set");
-		return $this->appMapper->authenticateApp($this->request->app_id, $this->request->token, $this->request->user_id);
+	protected function authorizeAppRequest($appId, $token, $userId) {
+		if ( !isset($appId)  ) throw new Exception("app_id must be set");
+		if ( !isset($token)  ) throw new Exception("token must be set");
+		if ( !isset($userId) ) throw new Exception("user_id must be set");
+		$app = new App();
+		$app->setUserId($userId);
+		$app->setId($appId);
+		$app->setToken($token);
+		return $this->appMapper->authenticateApp($app);
 	}
 	
+	protected function newSetting($app, $data) {
+		$setting = new Setting();
+		if ($app) {
+			$setting->setAppName($app->getName());
+			$setting->setUserId($app->getUserId());
+			$setting->setDeviceId($app->getDeviceId());
+		}
+		if ($data) {
+			$setting->setKey(key($data));
+			$setting->setValue(current($data));
+		}
+		return $setting;
+	}
 	
+	protected function returnSettings($app, $data) {
+		return new JSONResponse( array( 
+			"userId"=>$app->getUserId(), 
+			"appName"=>$app->getName(), 
+			"data"=>$data
+		));
+	}
+	
+	protected function checkData($data) {
+		if ( !isset($data)) throw new Exception("data not set");
+		$data = json_decode($data, true);
+		if ( !$data ) throw new Exception("data must be a valid json object");
+	}
+	
+	/**
+	 * @IsAdminExemption
+	 * @IsSubAdminExemption
+	 * @IsLoggedInExemption
+	 * @CSRFExemption
+	 * @Ajax
+	 * @API
+	 */
+	public function index() {
+		try {
+			$app = $this->authorizeAppRequest($this->request->app_id, $this->request->token, $this->request->user_id);
+			$settings = $this->settingMapper->findByApp($app->getName(), $this->request->user_id);
+			foreach($settings as $setting) {
+				$key = $setting->getKey();
+				$data[$key] = $setting->getValue();
+			}
+			return $this->returnSettings($app, $data);
+		} catch (Exception $exception) {	
+			return new JSONResponse($exception->getMessage());
+		}
+	}
+	
+		
 	/**
 	 * @IsAdminExemption
 	 * @IsSubAdminExemption
@@ -41,22 +95,21 @@ class SettingController extends Controller {
 	 */
 	public function create() {
 		try {
-			$this->app = $this->authorizeAppRequest();
-			$appName = $this->app->getName();
-			$deviceId = $this->app->getDeviceId();
-			if ( !isset($this->request->data)) throw new Exception("data not set");
-			$data = json_decode($this->request->data, true);
-			if ( !$data ) throw new Exception("data must be a valid json object");
+			$app = $this->authorizeAppRequest($this->request->app_id, $this->request->token, $this->request->user_id);
+			$data = checkData($this->request->data);
 			foreach ($data as $key => $value) {
-				$setting = new Setting(array("userId"=>$this->request->user_id, "appName"=>$appName, "deviceId"=>$deviceId, 																				"key"=>$key, "value"=>$value));
-				if ( $this->settingMapper->findByKey($setting) ) {
-					$this->settingMapper->updateValue($setting);
+				$d = array();
+				$d[$key] = $value;
+				$setting = $this->newSetting($app, $d);
+				$existingSettingId = $this->settingMapper->existingSetting($setting);
+				if ( $existingSettingId ) {
+					$setting->setId($existingSettingId);
+					$this->settingMapper->update($setting);
 				} else {
-					$this->settingMapper->create($setting);
+					$this->settingMapper->insert($setting);
 				}
 			}
-			return new JSONResponse( array( "userId"=>$setting->getUserId(), "appName"=>$setting->getAppName(), 
-															"data"=>array( $setting->getKey() => $setting->getValue() ) ) );
+			return $this->returnSettings($app, $data); 
 		} catch (Exception $exception) {
 			return new JSONResponse($exception->getMessage());
 		}
@@ -71,41 +124,14 @@ class SettingController extends Controller {
 	 * @Ajax
 	 * @API
 	 */
-	public function index() {
-		try {
-			$this->app = $this->authorizeAppRequest();
-			$settings = $this->settingMapper->findByApp($this->app->getName(), $this->request->user_id);
-			foreach($settings as $setting) {
-				$key = $setting->getKey();
-				$data[$key] = $setting->getValue();
-			}
-			return new JSONResponse( array("userId"=>$settings[0]->getUserId(),	
-															"appName"=>$settings[0]->getAppName(), "data"=>$data ));
-		} catch (Exception $exception) {	
-			return new JSONResponse($exception->getMessage());
-		}
-			
-	}
-	
-		
-	/**
-	 * @IsAdminExemption
-	 * @IsSubAdminExemption
-	 * @IsLoggedInExemption
-	 * @CSRFExemption
-	 * @Ajax
-	 * @API
-	 */
 	public function show() {
 		try {
-			$this->app = $this->authorizeAppRequest();
-			$setting = new Setting;
-			$setting->setAppName($this->app->getName());
-			$setting->setUserId($this->app->getUserId());
-			$setting->setKey($this->request->settingId);
+			$app = $this->authorizeAppRequest($this->request->app_id, $this->request->token, $this->request->user_id);
+			$setting = $this->newSetting($app);
+			$setting->setKey($this->request->key);
 			$setting = $this->settingMapper->findByKey($setting);
-			return new JSONResponse( array( "userId"=>$setting->getUserId(), "appName"=>$setting->getAppName(), 
-																"data"=>array( $setting->getKey() => $setting->getValue() )	) );
+			$data = array( $setting->getKey() => $setting->getValue() ) ;
+			return $this->returnSettings($app, $data);
 		} catch (Exception $exception) {	
 			return new JSONResponse($exception->getMessage());
 		}
@@ -122,16 +148,16 @@ class SettingController extends Controller {
 	 */
 	public function update() {
 		try {
-			$this->app = $this->authorizeAppRequest();
-			$setting = new Setting;
-			$setting->setAppName($this->app->getName());
-			$setting->setUserId($this->app->getUserId());
-			$setting->setDeviceId($this->app->getDeviceId());
-			$setting->setKey($this->request->settingId);
+			$app = $this->authorizeAppRequest($this->request->app_id, $this->request->token, $this->request->user_id);
+			if ( !isset($this->request->value) ) throw new Exception("value must be set");
+			$setting = $this->newSetting($app, $data);
+			$setting->setKey($this->request->key);
+			$setting = $this->settingMapper->findByKey($setting);
 			$setting->setValue($this->request->value);
-			$this->settingMapper->updateValue($setting);
-			return new JSONResponse( array( "userId"=>$setting->getUserId(), "appName"=>$setting->getAppName(), 																	"data"=>array($setting->getKey() => $setting->getValue() ) ) );
-		} catch (Exception $exception) {	
+			$this->settingMapper->update($setting);
+			$data = array($setting->getKey() => $setting->getValue() );
+			return $this->returnSettings($app, $data); 
+		} catch (Exception $exception) {
 			return new JSONResponse($exception->getMessage());
 		}
 	}
@@ -147,16 +173,13 @@ class SettingController extends Controller {
 	 */
 	public function destroy() {
 		try {
-			$this->app = $this->authorizeAppRequest();
-			$setting = new Setting;
-			$setting->setAppName($this->app->getName());
-			$setting->setUserId($this->app->getUserId());
-			$setting->setDeviceId($this->app->getDeviceId());
-			$setting->setKey($this->request->settingId);
-			$this->settingMapper->deleteByKey($setting);
-			// $setting = $this->settingMapper->findByKey($setting);
-			return new JSONResponse( array( "userId"=>$setting->getUserId(), "appName"=>$setting->getAppName(), 
-															"data"=>array( $setting->getKey() => $setting->getValue() ) ) );
+			$app = $this->authorizeAppRequest($this->request->app_id, $this->request->token, $this->request->user_id);
+			$setting = $this->newSetting($app);
+			$setting->setKey($this->request->key);
+			$setting = $this->settingMapper->findByKey($setting);
+			$this->settingMapper->delete($setting);
+			$data = array($setting->getKey(), $setting->getValue() );
+			return $this->returnSettings($app, $data); 
 		} catch (Exception $exception) {	
 			return new JSONResponse($exception->getMessage());
 		}

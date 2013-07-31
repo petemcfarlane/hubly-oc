@@ -15,16 +15,13 @@ class DeviceMapper extends Mapper {
 	protected function findAllRows($sql, $params, $limit=null, $offset=null) {
 		$result = $this->execute($sql, $params, $limit, $offset);
 
-		$items = array();
+		$devices = array();
 
 		while($row = $result->fetchRow()){
-			$item = new Item();
-			$item->fromRow($row);
-
-			array_push($items, $item);
+			$device = new Device($row);
+			array_push($devices, $device);
 		}
-
-		return $items;
+		return $devices;
 	}
 
 	/*public function findAll($id) {

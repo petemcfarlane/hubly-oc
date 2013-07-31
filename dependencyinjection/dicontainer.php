@@ -7,10 +7,8 @@ use \OCA\AppFramework\Db\API;
 use \OCA\Hubly\Controller\PageController;
 use \OCA\Hubly\Controller\UserController;
 use \OCA\Hubly\Controller\SettingController;
+use \OCA\Hubly\Controller\AppController;
 
-use \OCA\Hubly\Db\SettingMapper;
-
-	
 class DIContainer extends BaseContainer {
 
     public function __construct(){
@@ -34,5 +32,8 @@ class DIContainer extends BaseContainer {
 			return new SettingController($c['API'], $c['Request']);
 		};
 		
+		$this['AppController'] = function($c){
+			return new AppController($c['API'], $c['Request']);
+		};
 	}
 }

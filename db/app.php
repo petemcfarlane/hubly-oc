@@ -14,9 +14,8 @@ class App extends Entity {
 		if ($fromRow) $this->fromRow($fromRow);
 	}
 
-	
-	public function getName() {
-		return $this->name;
-	}
-
+	public function setToken($token) {
+		$token = isset($token) ? $token : uniqid('', true);
+		parent::setToken($token);
+	}	
 }

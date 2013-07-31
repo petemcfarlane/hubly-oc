@@ -48,10 +48,12 @@ routes:
     verb: GET
 
 # External API
-#  - url: /api/settings
-#    verb: GET
-#    controller: SettingsAPI
-#    action: index
+
 resources:
     setting:
       url: /api/settings
+      param: key
+
+    app:
+      url: /api/apps
+
