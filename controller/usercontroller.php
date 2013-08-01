@@ -93,4 +93,45 @@ class UserController extends Controller {
 			return $this->render('signup', $params, '');
 		}
 	}		
+	
+
+	/**
+	 * @IsAdminExemption
+	 * @IsSubAdminExemption
+	 * @IsLoggedInExemption
+	 * @CSRFExemption
+	 * @Ajax
+	 * @API
+	 */
+	public function create($groups=array('hubly'), $quota="100 MB") {
+		try {
+			if ( empty($this->request->name) ) throw new Exception('name must be set');	
+			if ( empty($this->request->email)) throw new Exception('email must be set');
+			if ( empty($this->request->email_confirmation) ) 
+												throw new Exception('email_confirmation must be set');
+			if ( $this->request->email !== $this->request->email_confirmation ) 
+												throw new Exception('email and email_confirmation do not match');
+			if ( strlen($this->request->password) < 6 ) 
+												throw new Exception('password must be set and must be at least 6 characters');
+			if ( !\OC_User::createUser($this->request->email, $this->request->password) ) 
+												throw new Exception('User creation failed');
+			\OC_User::setDisplayName($this->request->email, $this->request->name);
+			foreach( $groups as $group ) {
+				if(!\OC_Group::groupExists($group)) {
+					\OC_Group::createGroup($group);
+				}
+				\OC_Group::addToGroup( $this->request->email, $group );
+			}
+			if ( !\OC_User::login($this->request->email, $this->request->password) ) throw new Exception('Login failed');
+			return new JSONResponse($this->request->email);
+		} catch (Exception $exception) {
+			if ($exception->getMessage() == 'The username is already being used') {
+				return new JSONResponse( "The email address has already been used" );
+			} else {
+				return new JSONResponse($exception->getMessage());
+			}
+		}
+	}
+
+
 }

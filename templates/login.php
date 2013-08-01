@@ -1,6 +1,5 @@
 {% set title = "Login" %}
 {% include '_header.php' %}
-
 <div class="row">
 	<div class="large-6 columns large-offset-3">
 		<h1>Login</h1>
@@ -14,5 +13,4 @@
 		<p><a href="{{ url('hubly.page.signup') }}">Click here if you need to sign up</a></p>
 	</div>
 </div>
-
 {% include '_footer.php' %}

@@ -22,9 +22,13 @@
 						<img src="/apps/hubly/img/hubly-logo-90.svg" alt="Hubly" class="hubly-logo" />
 					</a>
 					{% if uname %}
-						<a href="{{ url('hubly.page.index') }}" class="right">{{ uname }}</a>
+						<a href="#" class="right dropdown navlink " data-dropdown="drop2">{{ uname }}</a>
+						<ul class="f-dropdown" id="drop2" data-dropdown-content >
+							<li><a href="{{ url('hubly.page.account') }}">Account settings</a></li>
+							<li><a href="{{ url('hubly.user.logout') }}">Logout</a></li>
+						</ul>
 					{% else %}
-						<a href="{{ url('hubly.page.login') }}" class="right">Login</a>
+						<a href="{{ url('hubly.page.login') }}" class="right navlink">Login</a>
 					{% endif %}
 				</nav>
 			</div>

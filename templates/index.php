@@ -1,4 +1,3 @@
-{% set title = "Home" %}
 {% include '_header.php' %}
 {% if settings or aps or devices %}
 	<div class="row">

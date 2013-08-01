@@ -60,6 +60,7 @@ class SettingController extends Controller {
 		if ( !isset($data)) throw new Exception("data not set");
 		$data = json_decode($data, true);
 		if ( !$data ) throw new Exception("data must be a valid json object");
+		return $data;
 	}
 	
 	/**
@@ -96,7 +97,7 @@ class SettingController extends Controller {
 	public function create() {
 		try {
 			$app = $this->authorizeAppRequest($this->request->app_id, $this->request->token, $this->request->user_id);
-			$data = checkData($this->request->data);
+			$data = $this->checkData($this->request->data);
 			foreach ($data as $key => $value) {
 				$d = array();
 				$d[$key] = $value;
@@ -127,7 +128,7 @@ class SettingController extends Controller {
 	public function show() {
 		try {
 			$app = $this->authorizeAppRequest($this->request->app_id, $this->request->token, $this->request->user_id);
-			$setting = $this->newSetting($app);
+			$setting = $this->newSetting($app, null);
 			$setting->setKey($this->request->key);
 			$setting = $this->settingMapper->findByKey($setting);
 			$data = array( $setting->getKey() => $setting->getValue() ) ;
@@ -150,7 +151,7 @@ class SettingController extends Controller {
 		try {
 			$app = $this->authorizeAppRequest($this->request->app_id, $this->request->token, $this->request->user_id);
 			if ( !isset($this->request->value) ) throw new Exception("value must be set");
-			$setting = $this->newSetting($app, $data);
+			$setting = $this->newSetting($app, null);
 			$setting->setKey($this->request->key);
 			$setting = $this->settingMapper->findByKey($setting);
 			$setting->setValue($this->request->value);
@@ -178,7 +179,7 @@ class SettingController extends Controller {
 			$setting->setKey($this->request->key);
 			$setting = $this->settingMapper->findByKey($setting);
 			$this->settingMapper->delete($setting);
-			$data = array($setting->getKey(), $setting->getValue() );
+			$data = array($setting->getKey() => $setting->getValue() );
 			return $this->returnSettings($app, $data); 
 		} catch (Exception $exception) {	
 			return new JSONResponse($exception->getMessage());

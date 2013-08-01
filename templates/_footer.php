@@ -16,6 +16,7 @@
 		</footer>
 		<script src="/core/js/jquery-1.10.2.min.js"></script>
 		<script src="/apps/hubly/js/foundation.min.js"></script>
+		<script src="/apps/hubly/js/foundation/foundation.dropdown.js"></script>
 		<script src="/apps/hubly/js/hubly.js"></script>
 	</body>
 </html>

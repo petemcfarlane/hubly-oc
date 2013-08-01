@@ -54,7 +54,15 @@ routes:
     url: /settings/{appName}/{key}
     verb: GET
 
+  - name: page#account
+    url: /account
+    verb: GET
+
 # External API
+
+  - name: user#create
+    url: /api/user
+    verb: POST
 
 resources:
     setting:

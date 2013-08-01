@@ -1,5 +1,4 @@
-//$(document).foundation();
-$(document).foundation('alerts orbit', {
+$(document).foundation('alerts dropdown orbit', {
   timer_speed: 5000,
   pause_on_hover: true,
   resume_on_mouseout: true,

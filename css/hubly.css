@@ -18,20 +18,22 @@ html.placeholder label {display:none}
 .orbit-next, .orbit-prev {opacity:0; -webkit-transition:opacity.4s ease-in; -moz-transition:opacity .4s ease-in; -o-transition:opacity .4s ease-in; transition:opacity .4s ease-in;}
 .orbit-container:hover .orbit-next, .orbit-container:hover .orbit-prev {opacity:0.9}
 
+h1, h2, h3, h4, h5 {font-weight:300}
+
 header {color:white; margin-bottom:1em;background: #ff7c19}
-header a {color:#fff; font-family:"Sommet Rounded"; text-shadow:0 1px 1px #E76700; font-size:1.5em}
+header a.navlink {color:#fff; font-family:"Sommet Rounded"; text-shadow:0 1px 1px #E76700; font-size:1.5em}
 header nav {height: 45px; line-height:45px}
 header nav .standard{display:none}
 header nav .hubly-logo {width:51px; height:51px}
+header .f-dropdown li {font-size: inherit}
 .no-touch header a img {transition:transform .1s; -webkit-transition:-webkit-transform .1s; -moz-transition:-moz-transform .1s; -o-transition:-o-transform .1s}
-.no-touch header a:hover,
-.no-touch header a:focus {color:white; text-shadow:0 2px 2px #E76700,0 -2px 0 rgba(255, 187, 116, 0.12);}
+.no-touch header a.navlink:hover,
+.no-touch header a.navlink:focus {color:white; text-shadow:0 2px 2px #E76700,0 -2px 0 rgba(255, 187, 116, 0.12);}
 .no-touch header a:hover img {-webkit-transform:scale(1.1); -moz-transform:scale(1.1); -o-transform:scale(1.1); -ms-transform:scale(1.1); transform:scale(1.1); }
 
 @media only screen and (min-width: 32em) {
-	header nav {height:80px; line-height:80px}
+	header nav {height:79px; line-height:79px}
 	header nav .standard {display:block}
 	.mini {display:none}
-	header nav a {font-size:2em;}
 	header nav .hubly-logo {width:90px; height:90px}
 }

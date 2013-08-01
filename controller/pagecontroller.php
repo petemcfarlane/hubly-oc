@@ -67,9 +67,7 @@ class PageController extends Controller {
 	 * @CSRFExemption
 	 * @IsLoggedInExemption
 	 */
-	public function contact() {
-		return $this->render('contact', $this->params, '');
-	}
+	public function contact() {	return $this->render('contact', $this->params, ''); }
 	
 	/**
 	 * @IsAdminExemption
@@ -77,9 +75,7 @@ class PageController extends Controller {
 	 * @CSRFExemption
 	 * @IsLoggedInExemption
 	 */
-	public function privacyPolicy() {
-		return $this->render('privacy_policy', $this->params, '');
-	}
+	public function privacyPolicy() { return $this->render('privacy_policy', $this->params, ''); }
 	
 	/**
 	 * @IsAdminExemption
@@ -87,9 +83,7 @@ class PageController extends Controller {
 	 * @CSRFExemption
 	 * @IsLoggedInExemption
 	 */
-	public function about() {
-		return $this->render('about', $this->params, '');
-	}
+	public function about() { return $this->render('about', $this->params, ''); }
 	
 	/**
 	 * @IsAdminExemption
@@ -97,9 +91,7 @@ class PageController extends Controller {
 	 * @CSRFExemption
 	 * @IsLoggedInExemption
 	 */
-	public function help() {
-		return $this->render('help', $this->params, '');
-	}
+	public function help() { return $this->render('help', $this->params, ''); }
 	
 
 	/**
@@ -181,4 +173,17 @@ class PageController extends Controller {
 		$this->params['apps'] = $this->appMapper->findAllUserApps($this->uid);
 		return $this->render('apps', $this->params, '');
 	}
+	
+	/**
+	 * @IsAdminExemption
+	 * @IsSubAdminExemption
+	 * @CSRFExemption
+	 * @IsLoggedInExemption
+	 */
+	public function account() {
+		if ( !$this->uid ) return $this->redirect('hubly.page.signup');
+		return $this->render('account', $this->params, '');
+	}
+
+
 }
